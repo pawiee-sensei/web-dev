@@ -1,8 +1,12 @@
 import { useState } from 'react'
 import AuthLayout from '../components/AuthLayout.jsx'
 import { loginUser } from '../services/auth.js'
+import { navigateTo } from '../utils/navigation.js'
+import { useAuth } from '../context/AuthContext.jsx'
+
 
 function LoginPage() {
+  const { login } = useAuth()
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -13,6 +17,7 @@ function LoginPage() {
   })
 
   const handleChange = (event) => {
+    
     const { name, value } = event.target
     setFormData((current) => ({
       ...current,
@@ -26,10 +31,12 @@ function LoginPage() {
 
     try {
       const response = await loginUser(formData)
+      login(response.user)
       setStatus({
         type: 'success',
         message: response.message ?? 'Login successful.',
       })
+      navigateTo('/dashboard')
     } catch (error) {
       setStatus({
         type: 'error',

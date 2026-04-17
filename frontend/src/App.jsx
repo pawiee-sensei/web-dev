@@ -3,6 +3,8 @@ import usePathname from './hooks/usePathname.js'
 import HomePage from './pages/HomePage.jsx'
 import LoginPage from './pages/LoginPage.jsx'
 import RegisterPage from './pages/RegisterPage.jsx'
+import DashboardPage from './pages/dashboardPage.jsx'
+
 import './App.css'
 
 function App() {
@@ -30,6 +32,18 @@ function App() {
     )
   }
 
+  
+  if (pathname === '/dashboard') {
+    return (
+      <div className="app-shell">
+        <Header />
+        <main className="page-content">
+          <DashboardPage />
+        </main>
+      </div>
+    )
+  }
+
   return (
     <div className="app-shell">
       <Header />
@@ -39,5 +53,8 @@ function App() {
     </div>
   )
 }
+
+
+
 
 export default App

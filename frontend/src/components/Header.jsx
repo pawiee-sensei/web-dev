@@ -1,10 +1,17 @@
 import { navigateTo } from '../utils/navigation.js'
+import { useAuth } from '../context/AuthContext.jsx'
+
 
 function Header() {
-  const navItems = [
-    { label: 'Login', href: '/login' },
-    { label: 'Register', href: '/register' },
-  ]
+  const { isAuthenticated, logout } = useAuth();
+  const navItems = isAuthenticated
+    ? [{ label: 'Logout', href: '/logout' }]
+    : [
+        { label: 'Login', href: '/login' },
+        { label: 'Register', href: '/register' },
+    
+      ]
+  
 
   return (
     <header className="site-header">
@@ -12,12 +19,14 @@ function Header() {
         className="brand"
         href="/"
         onClick={(event) => {
-          event.preventDefault()
-          navigateTo('/')
+          event.preventDefault() 
+            navigateTo('/')
         }}
       >
         Auth App
       </a>
+
+
 
       <nav aria-label="Primary navigation">
         <ul className="nav-list">
@@ -26,9 +35,20 @@ function Header() {
               <a
                 className="nav-link"
                 href={item.href}
+                
                 onClick={(event) => {
-                  event.preventDefault()
-                  navigateTo(item.href)
+                  
+                  
+                  if (item.href === '/logout') {
+                    logout()
+                    navigateTo('/')
+
+                    return
+                  }
+        
+                    navigateTo(item.href)
+                  
+
                 }}
               >
                 {item.label}
