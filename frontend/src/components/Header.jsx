@@ -5,7 +5,12 @@ import { useAuth } from '../context/AuthContext.jsx'
 function Header() {
   const { isAuthenticated, logout } = useAuth();
   const navItems = isAuthenticated
-    ? [{ label: 'Logout', href: '/logout' }]
+    ?[
+     { label: 'Logout', href: '/logout' },
+     { label: 'projects', href: '/projects' },
+
+    ]
+
     : [
         { label: 'Login', href: '/login' },
         { label: 'Register', href: '/register' },
@@ -37,7 +42,7 @@ function Header() {
                 href={item.href}
                 
                 onClick={(event) => {
-                  
+                  event.preventDefault()
                   
                   if (item.href === '/logout') {
                     logout()

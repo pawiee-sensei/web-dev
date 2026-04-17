@@ -4,6 +4,8 @@ import HomePage from './pages/HomePage.jsx'
 import LoginPage from './pages/LoginPage.jsx'
 import RegisterPage from './pages/RegisterPage.jsx'
 import DashboardPage from './pages/dashboardPage.jsx'
+import ProjectsPage from './pages/ProjectsPage.jsx'
+
 
 import './App.css'
 
@@ -43,6 +45,18 @@ function App() {
       </div>
     )
   }
+
+  if (pathname === '/projects') {
+  return (
+    <div className="app-shell">
+      <Header />
+      <main className="page-content">
+        <ProjectsPage />
+      </main>
+    </div>
+  )
+}
+
 
   return (
     <div className="app-shell">
