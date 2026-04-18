@@ -53,8 +53,33 @@ function ProjectsPage() {
                      >
                     CRUD
                 </button>
+
+                <button
+                className="tab-button"
+                type="button"
+                onClick={() => setActiveTab('single-input')}
+            >
+                Single Input
+            </button>
+
+
             </div>
 
+            {activeTab === 'single-input' && (
+                <div className="auth-card">
+                    <div className="auth-card-header">
+                        <h2>Single Input</h2>
+                        <p>Fill in the details below.</p>
+                </div>
+            
+            <label className="field">
+                <span>Value</span>
+                <input type="text" placeholder="Type something here" />
+            </label>
+
+            </div>
+                
+            )}
             {activeTab === 'crud' && (
                 <>
                     <RecordForm
