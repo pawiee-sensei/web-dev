@@ -17,3 +17,15 @@ export async function createPerson(payload) {
 
     return data.person;
 }
+
+
+export async function getPersons() {
+    const response = await fetch(API_BASE_URL);
+    const data = await response.json();
+
+    if (!response.ok) {
+        throw new Error(data.error ?? 'Request failed.');
+    }
+
+    return data.persons;
+}

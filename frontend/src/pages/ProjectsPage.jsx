@@ -13,7 +13,7 @@ function ProjectsPage() {
     personInfo,
     handleRecordChange,
     handleSingleInputChange,
-    handlePersonChange,
+    handlePersonInputChange,
     handleRecordSubmit,
     handleSingleSubmit,
     handlePersonSubmit,
@@ -73,7 +73,7 @@ function ProjectsPage() {
         {activeTab === 'personal-info' && (
             <PersonForm
                 personInfo={personInfo}
-                onChange={handlePersonChange}
+                onChange={handlePersonInputChange}
                 onSubmit={handlePersonSubmit}
             />  
         )}
