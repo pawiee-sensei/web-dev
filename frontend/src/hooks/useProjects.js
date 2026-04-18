@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { createRecord, getRecords } from '../services/record.js';
 import { createName } from '../services/singleInput.js';
 import { createPerson } from '../services/person.js';
+import { createTask, getTasks } from '../services/task.js';
 
 
 // ========================
@@ -18,9 +19,17 @@ const INITIAL_PERSON_FORM = {
   gender: '',
 };
 
+const INITIAL_TASK_FORM = {
+  title: '',
+  details: '',
+  priority: 'medium',
+  status: 'pending',
+  dueDate: '',
+}
 
 
 const INITIAL_SINGLE_INPUT = '';
+
 
 export function useProjects() {
   // ========================
@@ -30,6 +39,7 @@ export function useProjects() {
   const [records, setRecords] = useState([]);
   const [singleInput, setSingleInput] = useState(INITIAL_SINGLE_INPUT);
   const [personInfo, setPersonInfo] = useState({ ...INITIAL_PERSON_FORM });
+  const [tasksform, setTasksForm] = useState({ ...INITIAL_TASK_FORM });
 
   // ========================
   // GENERIC REQUEST HELPER
@@ -44,8 +54,10 @@ export function useProjects() {
   };
 
   // ========================
-  // Change Handlers for Record
+  // Change Handlers
   // ========================
+
+  //change handlers for record
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData((prev) => ({
@@ -54,16 +66,12 @@ export function useProjects() {
     }));
   };
 
-  // ========================
-  // Change Handlers for Single Input
-  // ========================
+  // change handlers for single input
   const handleSingleInputChange = (event) => {
     setSingleInput(event.target.value);
   };
 
-  // ========================
-  // Change Handlers for Person
-  // ========================
+  // change handlers for person
   const handlePersonInputChange = (event) => {
     const { name, value } = event.target;
     setPersonInfo((prev) => ({
@@ -72,24 +80,40 @@ export function useProjects() {
     }));
   };
 
+  const handleTaskChange = (event) => {
+    const { name, value } = event.target;
+    setTasksForm((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  }
+
   // ========================
   // RESET
   // ========================
+
+  // reset handlers for record
   const resetRecordForm = () => {
     setFormData({ ...INITIAL_RECORD_FORM });
   };
-
+ // reset handlers for single input
   const resetSingleInput = () => {
     setSingleInput(INITIAL_SINGLE_INPUT);
   };
-
+ // reset handlers for person
   const resetPersonInfo = () => {
     setPersonInfo({ ...INITIAL_PERSON_FORM });
+  }
+
+  const resetTaskForm = () => {
+    setTasksForm({ ...INITIAL_TASK_FORM });
   }
 
   // ========================
   // SUBMIT HANDLERS for Record
   // ========================
+
+  // submit handlers for record
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -102,9 +126,7 @@ export function useProjects() {
     );
   };
 
-  // ========================
-  // SUBMIT HANDLERS for Single Input
-  // ========================
+ // submit handlers for single input
   const handleSingleSubmit = (event) => {
     event.preventDefault();
 
@@ -116,9 +138,7 @@ export function useProjects() {
     );
   };
 
-  // ========================
-  // SUBMIT HANDLERS for Person
-  // ========================
+ // submit handlers for person
   const handlePersonSubmit = (event) => {
     event.preventDefault();
 
@@ -129,6 +149,17 @@ export function useProjects() {
       }
     );
   };
+
+  const handleTaskSubmit = (event) => {
+    event.preventDefault();
+
+    runRequest(
+      () => createTask(tasksform),
+      () => {
+        resetTaskForm();
+      }
+    );
+  }
 
   // ========================
   // EFFECT
@@ -145,14 +176,17 @@ export function useProjects() {
     records,
     singleInput,
     personInfo,
+    tasksform,
 
     handleChange,
     handleSingleInputChange,
     handlePersonInputChange,
+    handleTaskChange,
 
     handleSubmit,
     handleSingleSubmit,
     handlePersonSubmit,
+    handleTaskSubmit,
   };
 }
 
